@@ -24,31 +24,35 @@ class UserController(Resource):
         if current_identity.username == username:
             DBHandler.delete_user_by_username(username)
         else:
-            response = {'message': 'User can delete itself but no other users'}
+            response = {'message': 'User can delete himself but no other users'}
             status = 403
 
         return response, status
     
     @jwt_required()
     def put(self, username):
-        data = request.get_json()
         response = {}
         status = 200
-        
-        try:
-            user_to_update = User(
-                0, 
-                data['username'],
-                data['password'],
-                data['firstname'],
-                data['lastname'],
-                data['email']
-            )
-            user = DBHandler.update_user(username, user_to_update)
-            response = {'message': 'User updated', 'user': user.__dict__}
+
+        if(current_identity.username == username):
+            data = request.get_json()
             
-        except KeyError:
-            response = {'message': 'Update failed. Json missing keys.'}
-            status = 400
+            try:
+                user_to_update = User(
+                    0, 
+                    data['username'],
+                    data['password'],
+                    data['firstname'],
+                    data['lastname'],
+                    data['email']
+                )
+                user = DBHandler.update_user(username, user_to_update)
+                response = {'message': 'User updated', 'user': user.__dict__}
+                
+            except KeyError:
+                response = {'message': 'Update failed. Json missing keys.'}
+                status = 400
+        else:
+            response = {'message': 'User can update himself but no other users'}
 
         return response, status
