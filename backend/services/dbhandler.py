@@ -1,10 +1,11 @@
 from models.user import User
 from models.response_user import ResponseUser
 
-# Temporary database
+# Temporary databases
 _id = 2
-username_mapping = { 'dortal': User(1, 'dortal', '123456', 'dor', 'tal', 'dortal@gmail.com') }
-userid_mapping = { u.id: u for u in username_mapping.values() }
+username_mapping = {}
+userid_mapping = {}
+jti_mapping = {}
 
 # This class should be modified to work against PostgreSQL.
 class DBHandler:
@@ -34,10 +35,10 @@ class DBHandler:
     @staticmethod 
     def add_user(user):
         if type(user) is User:
-            userInMap = username_mapping.get(user.username, None)
-            userNotExists = userInMap == None
+            user_in_map = username_mapping.get(user.username, None)
+            user_not_exists = user_in_map == None
 
-            if userNotExists:
+            if user_not_exists:
                 global _id
                 user.id = _id
                 username_mapping[user.username] = user
@@ -55,15 +56,23 @@ class DBHandler:
     @staticmethod
     def update_user(username, user):
         if type(user) is User:
-            userInMap = username_mapping.get(username, None)
-            user_not_exists = userInMap == None
+            user_in_map = username_mapping.get(username, None)
+            user_not_exists = user_in_map == None
 
             if user_not_exists:
                 DBHandler.add_user(user)
             else:
-                user.id = userInMap.id # the id shouldn't be changed
+                user.id = user_in_map.id # the id shouldn't be changed
                 username_mapping.update({ username: user })
                 userid_mapping.update({ user.id: user })
                 return ResponseUser(username_mapping.get(username, None))
         else:
             raise ValueError("user should be of type User")
+
+    @staticmethod
+    def add_blacklisted_jti(jti):
+        jti_mapping[jti] = jti
+
+    @staticmethod
+    def is_jti_blacklisted(token):
+        return jti_mapping.get(token, None) != None

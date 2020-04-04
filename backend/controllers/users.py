@@ -1,10 +1,10 @@
 from flask_restful import Resource
-from flask_jwt import jwt_required
+from flask_jwt_extended import jwt_required
 from models.response_user import ResponseUser
 from services.dbhandler import DBHandler
 
 class UsersController(Resource):
-    @jwt_required()
+    @jwt_required
     def get(self, username=None):
         status = 200
         response = list(

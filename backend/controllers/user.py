@@ -1,12 +1,12 @@
 from flask_restful import Resource
-from flask_jwt import jwt_required, current_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import jsonify, request
 from services.dbhandler import DBHandler
 from models.response_user import ResponseUser
 from models.user import User
 
 class UserController(Resource):
-    @jwt_required()
+    @jwt_required
     def get(self, username):
         user = DBHandler.get_user_by_username(username)
         status = 200 if user else 404
@@ -16,12 +16,12 @@ class UserController(Resource):
 
         return response, status
 
-    @jwt_required()
+    @jwt_required
     def delete(self, username):
         response = {'message': 'User deleted'}
         status = 200
         
-        if current_identity.username == username:
+        if get_jwt_identity() == username:
             DBHandler.delete_user_by_username(username)
         else:
             response = {'message': 'User can delete himself but no other users'}
@@ -29,12 +29,12 @@ class UserController(Resource):
 
         return response, status
     
-    @jwt_required()
+    @jwt_required
     def put(self, username):
         response = {}
         status = 200
 
-        if(current_identity.username == username):
+        if(get_jwt_identity() == username):
             data = request.get_json()
             
             try:

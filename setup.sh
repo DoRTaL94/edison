@@ -16,7 +16,10 @@ echo "installing flask restful"
 pip3 install flask-restful
 
 echo "installing flask jwt"
-pip3 install flask-jwt
+pip3 install flask-jwt-extended
+
+echo "installing passlib"
+pip3 install passlib
 
 echo "running flask_init.py"
 export FLASK_APP=/vagrant/flask_init.py
