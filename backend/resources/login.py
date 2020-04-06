@@ -1,13 +1,15 @@
 from flask_restful import Resource
 from flask import request
-from services.dbhandler import DBHandler
 from models.user import User
 from flask_jwt_extended import (create_access_token, create_refresh_token)
 
-class LoginController(Resource):
+class Login(Resource):
+    def __init__(self, **kwargs):
+        self.DBHandler = kwargs['DBHandler']
+
     def post(self):
         data = request.get_json()
-        current_user = DBHandler.get_user_by_username(data['username'])
+        current_user = self.DBHandler.get_user_by_username(data['username'])
         status = 200
         response = {}
 

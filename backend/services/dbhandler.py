@@ -2,7 +2,7 @@ from models.user import User
 from models.response_user import ResponseUser
 
 # Temporary databases
-_id = 2
+_id = 1
 username_mapping = {}
 userid_mapping = {}
 jti_mapping = {}
@@ -45,9 +45,9 @@ class DBHandler:
                 userid_mapping[_id] = user
                 _id += 1
             else:
-                raise ValueError("user already exists")
+                raise ValueError("User already exists")
         else:
-            raise ValueError("user should be of type User")
+            raise ValueError("User should be of type User")
 
     @staticmethod
     def get_users():
@@ -67,7 +67,7 @@ class DBHandler:
                 userid_mapping.update({ user.id: user })
                 return ResponseUser(username_mapping.get(username, None))
         else:
-            raise ValueError("user should be of type User")
+            raise ValueError("User should be of type User")
 
     @staticmethod
     def add_blacklisted_jti(jti):
