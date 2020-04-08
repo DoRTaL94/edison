@@ -1,6 +1,8 @@
 from flask import request
 from flask_restful import Resource
-from models.user import User
+from psycopg2.errors import UniqueViolation
+from sqlalchemy.exc import IntegrityError
+import backend.models as models
 
 class SignUp(Resource):
     def __init__(self, **kwargs):
@@ -10,31 +12,34 @@ class SignUp(Resource):
         data = request.get_json()
         response = {}
         status = 200
-        hashed_password = User.generate_hashed_password(data['password'])
+        hashed_password = models.User.generate_hashed_password(data['password'])
         
         try:
             self.DBHandler.add_user(
-                User(0, 
+                models.User( 
                     data['username'], 
                     hashed_password, 
-                    data['firstname'], 
-                    data['lastname'], 
+                    data['first_name'], 
+                    data['last_name'], 
                     data['email']
                 )
             )
             response = { 
-                'message': 'success',
+                'msg': 'success',
                 'user' : { 
                     'username': data['username']
                 } 
             }
 
         except KeyError:
-            response = {'message': 'Update failed. Json missing keys.'}
+            response = {'msg': 'Update failed. Json missing keys.'}
             status = 400
 
-        except ValueError as e:
-            response = { 'message': str(e) }
+        except IntegrityError as e:
             status = 400
+            if isinstance(e.orig, UniqueViolation):
+                response = {'msg': 'Username is taken.'}
+            else:
+                response = {'msg': 'Unknown error.'}
         
         return response, status

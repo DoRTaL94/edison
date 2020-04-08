@@ -1,13 +1,15 @@
-from flask import Flask
 from flask_restful import Api
-from resources import (users, user, signup, login, token_refresh, logout)
 from flask_jwt_extended import JWTManager
-from services.dbhandler import DBHandler
+from .services.dbhandler import DBHandler
+from backend.resources import *
 import secrets
+import backend
 
 # API description in swagger - https://app.swaggerhub.com/apis/DoRTaL94/UserManagment/1.0.0
 
-app = Flask(__name__)
+app = backend.app
+# Creates all tables in app. Table's name defined with __tablename__ variable.
+backend.db.create_all()
 # Enables response message for unauthenticated requests
 app.config['PROPAGATE_EXCEPTIONS'] = True
 # JWTManager uses this secret key for creating tokens
@@ -29,19 +31,10 @@ def check_if_token_in_blacklist(decrypted_token):
     return DBHandler.is_jti_blacklisted(jti)
 
 # Use of dependecy injection of DBHandler to loosly couple our classes
-api.add_resource(user.User, '/user/<string:username>', 
-    resource_class_kwargs={ 'DBHandler': DBHandler })
-api.add_resource(users.Users, '/users', 
-    resource_class_kwargs={ 'DBHandler': DBHandler })
-api.add_resource(signup.SignUp, '/signup', 
-    resource_class_kwargs={ 'DBHandler': DBHandler })
-api.add_resource(login.Login, '/login', 
-    resource_class_kwargs={ 'DBHandler': DBHandler })
-api.add_resource(logout.LogoutAccess, '/logout/access', 
-    resource_class_kwargs={ 'DBHandler': DBHandler })
-api.add_resource(logout.LogoutRefresh, '/logout/refresh', 
-    resource_class_kwargs={ 'DBHandler': DBHandler })
-api.add_resource(token_refresh.TokenRefresh, '/token-refresh')
-
-if __name__ == "__main__":
-    app.run(port=3000, debug=True)
+api.add_resource(User, '/user/<string:username>', resource_class_kwargs={ 'DBHandler': DBHandler })
+api.add_resource(Users, '/users', resource_class_kwargs={ 'DBHandler': DBHandler })
+api.add_resource(SignUp, '/signup', resource_class_kwargs={ 'DBHandler': DBHandler })
+api.add_resource(Login, '/login', resource_class_kwargs={ 'DBHandler': DBHandler })
+api.add_resource(LogoutAccess, '/logout/access', resource_class_kwargs={ 'DBHandler': DBHandler })
+api.add_resource(LogoutRefresh, '/logout/refresh', resource_class_kwargs={ 'DBHandler': DBHandler })
+api.add_resource(TokenRefresh, '/token-refresh')

@@ -1,6 +1,6 @@
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required
-from models.response_user import ResponseUser
+import backend.models as models
 
 class Users(Resource):
     def __init__(self, **kwargs):
@@ -11,7 +11,7 @@ class Users(Resource):
         status = 200
         response = list(
             map(
-                lambda user: ResponseUser(user).__dict__, self.DBHandler.get_users()
+                lambda user: models.ResponseUser(user).__dict__, self.DBHandler.get_users()
             )
         )
 
