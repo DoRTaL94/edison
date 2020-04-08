@@ -15,19 +15,19 @@ class User(Resource):
         status = 200 if user else 404
         response = { 
             username: ResponseUser(user).__dict__ 
-        } if user else { 'message': 'User not found' }
+        } if user else { 'msg': 'User not found' }
 
         return response, status
 
     @jwt_required
     def delete(self, username):
-        response = {'message': 'User deleted'}
+        response = {'msg': 'User deleted'}
         status = 200
         
         if get_jwt_identity() == username:
             self.DBHandler.delete_user_by_username(username)
         else:
-            response = {'message': 'User can delete himself but no other users'}
+            response = {'msg': 'User can delete himself but no other users'}
             status = 403
 
         return response, status
@@ -45,17 +45,17 @@ class User(Resource):
                     0, 
                     data['username'],
                     data['password'],
-                    data['firstname'],
-                    data['lastname'],
+                    data['first_name'],
+                    data['last_name'],
                     data['email']
                 )
                 user = self.DBHandler.update_user(username, user_to_update)
-                response = {'message': 'User updated', 'user': user.__dict__}
+                response = {'msg': 'User updated', 'user': user.__dict__}
                 
             except KeyError:
-                response = {'message': 'Update failed. Json missing keys.'}
+                response = {'msg': 'Update failed. Json missing keys.'}
                 status = 400
         else:
-            response = {'message': 'User can update himself but no other users'}
+            response = {'msg': 'User can update himself but no other users'}
 
         return response, status

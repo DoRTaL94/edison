@@ -14,7 +14,7 @@ class Login(Resource):
         response = {}
 
         if not current_user:
-            response = {'message': 'Username or password is incorrect'}
+            response = {'msg': 'Username or password is incorrect'}
             status = 401
 
         else:
@@ -23,12 +23,12 @@ class Login(Resource):
                 refresh_token = create_refresh_token(identity = data['username'])
 
                 response = {
-                    'message': 'Logged in as {}'.format(current_user.username),
+                    'msg': 'Logged in as {}'.format(current_user.username),
                     'access_token': access_token,
                     'refresh_token': refresh_token
                 }
             else:
-                response = {'message': 'Username or password is incorrect'}
+                response = {'msg': 'Username or password is incorrect'}
                 status = 401
         
         return response, status

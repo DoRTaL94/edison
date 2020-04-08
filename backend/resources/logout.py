@@ -13,17 +13,20 @@ class LogoutAccess(Resource):
         
         try:
             self.DBHandler.add_blacklisted_jti(jti)
-            return {'message': 'Access token has been revoked'}
+            return {'msg': 'Access token has been revoked'}
         except:
-            return {'message': 'Something went wrong'}, 500
+            return {'msg': 'Something went wrong'}, 500
 
 
 class LogoutRefresh(Resource):
+    def __init__(self, **kwargs):
+        self.DBHandler = kwargs['DBHandler']
+
     @jwt_refresh_token_required
     def post(self):
         jti = get_raw_jwt()['jti']
         try:
             self.DBHandler.add_blacklisted_jti(jti)
-            return {'message': 'Refresh token has been revoked'}
+            return {'msg': 'Refresh token has been revoked'}
         except:
-            return {'message': 'Something went wrong'}, 500
+            return {'msg': 'Something went wrong'}, 500

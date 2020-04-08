@@ -17,24 +17,24 @@ class SignUp(Resource):
                 User(0, 
                     data['username'], 
                     hashed_password, 
-                    data['firstname'], 
-                    data['lastname'], 
+                    data['first_name'], 
+                    data['last_name'], 
                     data['email']
                 )
             )
             response = { 
-                'message': 'success',
+                'msg': 'success',
                 'user' : { 
                     'username': data['username']
                 } 
             }
 
         except KeyError:
-            response = {'message': 'Update failed. Json missing keys.'}
+            response = {'msg': 'Update failed. Json missing keys.'}
             status = 400
 
         except ValueError as e:
-            response = { 'message': str(e) }
+            response = { 'msg': str(e) }
             status = 400
         
         return response, status

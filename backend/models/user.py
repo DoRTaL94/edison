@@ -5,8 +5,8 @@ class User:
         self.username = username
         self.id = _id
         self.password = password
-        self.firstname = firstname
-        self.lastname = lastname
+        self.first_name = first_name
+        self.last_name = last_name
         self.email = email
     
     @staticmethod

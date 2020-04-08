@@ -7,7 +7,7 @@ class ResponseUser:
         if type(user) is User:
             self.id = user.id
             self.username = user.username
-            self.firstname = user.firstname
-            self.lastname = user.lastname
+            self.first_name = user.first_name
+            self.last_name = user.last_name
         else:
             raise ValueError("user parameter should be of type User")

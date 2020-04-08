@@ -23,4 +23,8 @@ pip3 install passlib
 
 echo "running flask_init.py"
 export FLASK_APP=/vagrant/flask_init.py
-python3 -m flask run --host=0.0.0.0 >> /vagrant/log.log 2>&1 &
+flask run -h 0.0.0.0 -p 5000 >> /vagrant/flask_init.log 2>&1 &
+
+echo "running app.py"
+export FLASK_APP=/vagrant/backend/app.py
+flask run -h 0.0.0.0 -p 3000 >> /vagrant/app.log 2>&1 &
