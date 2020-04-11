@@ -1,5 +1,7 @@
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
+from .services.db_handler import DBHandler
+from backend.resources import *
 import secrets
 import backend
 
@@ -18,5 +20,16 @@ app.config['JWT_BLACKLIST_ENABLED'] = True
 app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']
 api = Api(app)
 # Creation of Json-Web-Token manager.
-# In order to reach secured endpoints client should add an authorization header with the value Bearer <token>.
+# In order to reach secured endpoints client should add an authorization header with the pair - Bearer <token>.
 jwt = JWTManager(app)
+
+# This decorator is a callback and it is called every time user is trying to access secured endpoints. 
+# The function under the decorator should return true or false depending on if the passed token is blacklisted.
+@jwt.token_in_blacklist_loader
+def check_if_token_in_blacklist(decrypted_token):
+    jti = decrypted_token['jti']
+    return DBHandler.is_jti_blacklisted(jti)
+
+# Use of dependecy injection of DBHandler to loosly couple our classes
+api.add_resource(User, '/user/<string:username>', resource_class_kwargs={ 'db_handler': DBHandler })
+api.add_resource(Login, '/login', resource_class_kwargs={ 'db_handler': DBHandler })
