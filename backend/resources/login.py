@@ -1,15 +1,29 @@
-from flask_restful import Resource
-from flask import request
+from flask_restful import Resource, reqparse
 from flask_jwt_extended import (create_access_token, create_refresh_token)
 import backend.models as models
+from passlib.hash import pbkdf2_sha256 as sha256
 
 class Login(Resource):
-    def __init__(self, **kwargs):
-        self.DBHandler = kwargs['DBHandler']
+    # RequestParser enforces arguments in requests. 
+    # If one of the arguments not exists, client gets an error response.
+    parser = reqparse.RequestParser()
+    parser.add_argument(
+        'username',
+        type=str,
+        required=True
+    )
+    parser.add_argument(
+        'password',
+        type=str,
+        required=True
+    )
+
+    def __init__(self, db_handler):
+        self.DBHandler = db_handler
 
     def post(self):
-        data = request.get_json()
-        current_user = self.DBHandler.get_user_by_username(data['username'])
+        data = Login.parser.parse_args()
+        current_user = self.DBHandler.get_by_username(models.User, data['username'])
         status = 200
         response = {}
 
@@ -18,7 +32,7 @@ class Login(Resource):
             status = 401
 
         else:
-            if models.User.verify_password(data['password'], current_user.password):
+            if sha256.verify(data['password'], current_user.password):
                 access_token = create_access_token(identity = data['username'])
                 refresh_token = create_refresh_token(identity = data['username'])
 

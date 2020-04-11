@@ -31,10 +31,10 @@ def check_if_token_in_blacklist(decrypted_token):
     return DBHandler.is_jti_blacklisted(jti)
 
 # Use of dependecy injection of DBHandler to loosly couple our classes
-api.add_resource(User, '/user/<string:username>', resource_class_kwargs={ 'DBHandler': DBHandler })
-api.add_resource(Users, '/users', resource_class_kwargs={ 'DBHandler': DBHandler })
-api.add_resource(SignUp, '/signup', resource_class_kwargs={ 'DBHandler': DBHandler })
-api.add_resource(Login, '/login', resource_class_kwargs={ 'DBHandler': DBHandler })
-api.add_resource(LogoutAccess, '/logout/access', resource_class_kwargs={ 'DBHandler': DBHandler })
-api.add_resource(LogoutRefresh, '/logout/refresh', resource_class_kwargs={ 'DBHandler': DBHandler })
+api.add_resource(User, '/user/<string:username>', resource_class_kwargs={ 'db_handler': DBHandler })
+api.add_resource(Users, '/users', resource_class_kwargs={ 'db_handler': DBHandler })
+api.add_resource(SignUp, '/signup', resource_class_kwargs={ 'db_handler': DBHandler })
+api.add_resource(Login, '/login', resource_class_kwargs={ 'db_handler': DBHandler })
+api.add_resource(LogoutAccess, '/logout/access', resource_class_kwargs={ 'db_handler': DBHandler })
+api.add_resource(LogoutRefresh, '/logout/refresh', resource_class_kwargs={ 'db_handler': DBHandler })
 api.add_resource(TokenRefresh, '/token-refresh')

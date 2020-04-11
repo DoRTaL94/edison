@@ -1,28 +1,51 @@
-from flask import request
-from flask_restful import Resource
+from flask_restful import Resource, reqparse
 from psycopg2.errors import UniqueViolation
 from sqlalchemy.exc import IntegrityError
 import backend.models as models
+from passlib.hash import pbkdf2_sha256 as sha256
 
 class SignUp(Resource):
-    def __init__(self, **kwargs):
-        self.DBHandler = kwargs['DBHandler']
+        # RequestParser enforces arguments in requests. 
+    # If one of the arguments not exists, client gets an error response.
+    parser = reqparse.RequestParser()
+    parser.add_argument(
+        'first_name',
+        type=str,
+        required=True
+    )
+    parser.add_argument(
+        'last_name',
+        type=str,
+        required=True
+    )
+    parser.add_argument(
+        'username',
+        type=str,
+        required=True
+    )
+    parser.add_argument(
+        'password',
+        type=str,
+        required=True
+    )
+    parser.add_argument(
+        'email',
+        type=str,
+        required=True
+    )
+
+    def __init__(self, db_handler):
+        self.DBHandler = db_handler
 
     def post(self):
-        data = request.get_json()
+        data = SignUp.parser.parse_args()
         response = {}
         status = 200
-        hashed_password = models.User.generate_hashed_password(data['password'])
-        
+        data['password'] = sha256.hash(data['password'])
+
         try:
-            self.DBHandler.add_user(
-                models.User( 
-                    data['username'], 
-                    hashed_password, 
-                    data['first_name'], 
-                    data['last_name'], 
-                    data['email']
-                )
+            self.DBHandler.add(
+                models.User(**data)
             )
             response = { 
                 'msg': 'success',
