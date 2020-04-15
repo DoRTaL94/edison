@@ -4,6 +4,8 @@ from .services.dbhandler import DBHandler
 from backend.resources import *
 import secrets
 import backend
+import backend.models as models
+
 
 # API description in swagger - https://app.swaggerhub.com/apis/DoRTaL94/UserManagment/1.0.0
 
@@ -28,7 +30,7 @@ jwt = JWTManager(app)
 @jwt.token_in_blacklist_loader
 def check_if_token_in_blacklist(decrypted_token):
     jti = decrypted_token['jti']
-    return DBHandler.is_jti_blacklisted(jti)
+    return DBHandler.get_by_filters(models.Token, {'jti': jti}) is not None
 
 # Use of dependecy injection of DBHandler to loosly couple our classes
 api.add_resource(User, '/user/<string:username>', resource_class_kwargs={ 'db_handler': DBHandler })

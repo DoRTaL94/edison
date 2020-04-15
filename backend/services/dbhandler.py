@@ -30,13 +30,3 @@ class DBHandler:
     @staticmethod
     def update():
         db.session.commit()
-
-    @staticmethod
-    def add_blacklisted_jti(jti):
-        blacklisted_token = models.Token(jti, datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
-        db.session.add(blacklisted_token)
-        db.session.commit()
-
-    @staticmethod
-    def is_jti_blacklisted(jti):
-        return models.Token.query.get(jti) is not None
