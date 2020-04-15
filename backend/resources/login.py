@@ -23,7 +23,7 @@ class Login(Resource):
 
     def post(self):
         data = Login.parser.parse_args()
-        current_user = self.DBHandler.get_by_username(models.User, data['username'])
+        current_user = self.DBHandler.get_by_filters(models.User, {'username': data['username']})
         status = 200
         response = {}
 

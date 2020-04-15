@@ -39,7 +39,7 @@ class User(Resource):
 
     @jwt_required
     def get(self, username):
-        user = self.DBHandler.get_by_username(models.User, username)
+        user = self.DBHandler.get_by_filters(models.User, {'username': username})
         status = 200 if user else 404
         response = { 
             username: models.ResponseUser(user).__dict__ 
@@ -70,9 +70,21 @@ class User(Resource):
             
             try:
                 data['password'] = sha256.hash(data['password'])
-                user_to_update = models.User(**data)
-                user = self.DBHandler.update_user(user_to_update, username)
-                response = {'msg': 'User updated', 'user': models.ResponseUser(user).__dict__}
+                updated_user = models.User(**data)
+
+                user_to_be_updated = self.DBHandler.get_by_filters(models.User, {'username': username})
+                if user_to_be_updated is None:
+                    raise ValueError(f"The user with username: {username} is not in the DB.")
+
+                user_to_be_updated.username = updated_user.username
+                user_to_be_updated.first_name = updated_user.first_name
+                user_to_be_updated.last_name = updated_user.last_name
+                user_to_be_updated.password = updated_user.password
+                user_to_be_updated.email = updated_user.email
+
+                self.DBHandler.update()
+
+                response = {'msg': 'User updated', 'user': models.ResponseUser(user_to_be_updated).__dict__}
             except KeyError:
                 response = {'msg': 'Update failed. Json missing keys.'}
                 status = 400

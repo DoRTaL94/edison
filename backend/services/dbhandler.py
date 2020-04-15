@@ -2,11 +2,12 @@ from backend import db
 from datetime import datetime
 import backend.models as models
 
+
 class DBHandler:
 
     @staticmethod
-    def get_by_username(model, username):
-        return model.query.filter_by(username = username).first()
+    def get_by_filters(model, filters):
+        return model.query.filter_by(**filters).first()
 
     @staticmethod
     def get_by_id(model, _id):
@@ -27,19 +28,8 @@ class DBHandler:
         db.session.commit()
     
     @staticmethod
-    def update_user(updated_user, username):
-        user_to_be_updated = DBHandler.get_by_username(models.User, username)
-        if user_to_be_updated is None:
-            raise ValueError(f"The user with username: {username} is not in the DB.")
-
-        user_to_be_updated.username = updated_user.username
-        user_to_be_updated.first_name = updated_user.first_name
-        user_to_be_updated.last_name = updated_user.last_name
-        user_to_be_updated.password = updated_user.password
-        user_to_be_updated.email = updated_user.email
+    def update():
         db.session.commit()
-
-        return user_to_be_updated
 
     @staticmethod
     def add_blacklisted_jti(jti):
