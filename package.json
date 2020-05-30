@@ -11,7 +11,7 @@
   },
   "scripts": {
     "lint:eslint": "npm i -g eslint",
-    "lint:prettier": "prettier \"**/*.{json,yml,html,css}\" --check",
-    "prettier:format": "prettier --write **/*.{json,yml,html,css}"
+    "lint:prettier": "prettier --single-quote \"**/*.{json,yml,html,css,js}\" --check",
+    "prettier:format": "prettier --single-quote --write **/*.{json,yml,html,css,js}"
   }
 }
