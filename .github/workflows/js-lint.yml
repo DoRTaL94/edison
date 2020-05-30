@@ -2,11 +2,9 @@ name: Lint
 
 on:
   push:
-    branches:
-      - master
-      - patch-release
+    branches: [ master ]
   pull_request:
-
+    branches: [ master ]
 jobs:
   lint:
     name: Lint
@@ -16,29 +14,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 1
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v1
+      
+      - uses: stefanoeb/eslint-action@1.0.2
         with:
-          node-version: "14"
-
-      - name: Install Dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: Check Dependencies
-        run: yarn lint:deps
-
-      - name: Check JSDoc Types
-        run: yarn lint:typecheck
-
-      - name: Lint ESLint
-        run: yarn lint:eslint
-
-      - name: Lint Prettier
-        run: yarn lint:prettier
-
-      - name: Spellcheck
-        run: yarn lint:spellcheck
-
-      - name: Lint Changelog
-        run: yarn lint:changelog
+          files: edison/static/js
