@@ -2,9 +2,7 @@
   "name": "edison",
   "version": "0.0.0",
   "private": true,
-  "dependencies": {
-    "cspell": "^4.0.63"
-  },
+  "dependencies": {},
   "devDependencies": {
     "eslint": "^7.1.0",
     "prettier": "2.0.5"
