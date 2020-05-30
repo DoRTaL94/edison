@@ -12,7 +12,7 @@
   "scripts": {
     "lint:eslint": "npm i -g eslint",
     "lint:prettier": "prettier \"**/*.{json,yml,html,css}\" --check",
-    "lint:spellcheck": "npm i -g cspell \"**/*\" \".github/**/*\"",
+    "lint:spellcheck": "cspell \"**/*\" \".github/**/*\"",
     "prettier:format": "prettier --write **/*.{json,yml,html,css}"
   }
 }
