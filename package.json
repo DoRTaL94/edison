@@ -1,17 +1,18 @@
 {
-    "name": "edison",
-    "version": "0.0.0",
-    "private": true,
-    "dependencies": {
-        "cspell": "^4.0.63"
-    },
-    "devDependencies": {
-        "eslint": "^7.1.0",
-        "prettier": "2.0.5"
-    },
-    "scripts": {
-        "lint:eslint": "npm i -g eslint",
-        "lint:prettier": "prettier \"**/*.{md,json,yml,html,css}\" --check",
-        "lint:spellcheck": "npm i -g cspell \"**/*\" \".github/**/*\""
-    }
+  "name": "edison",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "cspell": "^4.0.63"
+  },
+  "devDependencies": {
+    "eslint": "^7.1.0",
+    "prettier": "2.0.5"
+  },
+  "scripts": {
+    "lint:eslint": "npm i -g eslint",
+    "lint:prettier": "prettier \"**/*.{json,yml,html,css}\" --check",
+    "lint:spellcheck": "npm i -g cspell \"**/*\" \".github/**/*\"",
+    "prettier:format": "prettier --write **/*.{json,yml,html,css}"
+  }
 }
