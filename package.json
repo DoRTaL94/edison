@@ -2,7 +2,9 @@
     "name": "edison",
     "version": "0.0.0",
     "private": true,
-    "dependencies": {
+    "dependencies": {},
+    "devDependencies": {
+        "babel-eslint": "^10.1.0",
         "eslint": "^7.1.0"
     }
 }
