@@ -1,0 +1,16 @@
+{
+  "name": "edison",
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "prettier": "2.0.5"
+  },
+  "scripts": {
+    "lint:eslint": "eslint -c ./.eslintrc.json ../static/js/*.js",
+    "lint:prettier": "prettier --single-quote \"../**/*.{json,yml,html,css,js}\" --check",
+    "prettier:format": "prettier --single-quote --write \"../**/*.{json,yml,html,css,js}\" \"../../.github/**/*\"",
+    "eslintinit": "eslint --init"
+  }
+}
