@@ -30,6 +30,3 @@ jobs:
 
       - name: Lint Prettier
         run: npm run lint:prettier
-
-      - name: Spellcheck
-        run: npm run lint:spellcheck
