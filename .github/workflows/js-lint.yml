@@ -22,9 +22,6 @@ jobs:
         with:
           node-version: "14"
 
-      - name: Check JSDoc Types
-        run: yarn lint:typecheck
-
       - name: Lint ESLint
         run: yarn lint:eslint
 
