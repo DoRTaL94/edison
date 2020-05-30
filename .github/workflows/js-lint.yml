@@ -15,6 +15,5 @@ jobs:
         with:
           fetch-depth: 1
       
-      - uses: stefanoeb/eslint-action@1.0.2
-        with:
-          files: edison/static/js
+      - name: ESLint
+        uses: stefanoeb/eslint-action@1.0.2
