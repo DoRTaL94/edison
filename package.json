@@ -1,0 +1,15 @@
+{
+  "name": "edison",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^7.1.0",
+    "prettier": "2.0.5"
+  },
+  "scripts": {
+    "lint:eslint": "npm i -g eslint",
+    "lint:prettier": "prettier --single-quote \"**/*.{json,yml,html,css,js}\" --check",
+    "prettier:format": "prettier --single-quote --write **/*.{json,yml,html,css,js}"
+  }
+}
