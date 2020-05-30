@@ -25,7 +25,7 @@ export class Policy {
         }
 
         this.condition = this.condition + add_condition;
-        this.#countCondition++
+        this.#countCondition++;
     }
 
     addCommandToPolicy(airConditioner, light, shutters) {

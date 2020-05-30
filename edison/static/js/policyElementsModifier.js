@@ -8,7 +8,7 @@ export class PolicyElementsModifier {
             '<': { displayTo: 'none', displayFrom: 'none', labelEqualOrUnderOrAbove: 'Under', displayEqualOrUnderOrAbove: 'inline' },
             '>': { displayTo: 'none', displayFrom: 'none', labelEqualOrUnderOrAbove: 'Above', displayEqualOrUnderOrAbove: 'inline' },
             'Between': { displayTo: 'inline', displayFrom: 'inline', labelEqualOrUnderOrAbove: '', displayEqualOrUnderOrAbove: 'none' }
-        }
+        };
     }
 
     modify(condition, from, to, labelEqualOrUnderOrAbove, equalOrUnderOrAbove) {

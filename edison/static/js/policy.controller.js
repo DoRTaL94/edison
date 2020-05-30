@@ -1,7 +1,7 @@
 
-import { Policy } from './policy.model.js'
-import { PolicyElementsModifier } from './policyElementsModifier.js'
-import { PoliciesExampleArray } from './policiesExampleArray.js'
+import { Policy } from './policy.model.js';
+import { PolicyElementsModifier } from './policyElementsModifier.js';
+import { PoliciesExampleArray } from './policiesExampleArray.js';
 
 var policy = new Policy();
 
@@ -42,7 +42,7 @@ function getFromBackend() {
     var policiesArray = [];
 
     for (var i in jsonPolicyExample) {
-        var newPolicy = new Policy(jsonPolicyExample[i].name, jsonPolicyExample[i].room, jsonPolicyExample[i].command, jsonPolicyExample[i].condition, jsonPolicyExample[i].id)
+        var newPolicy = new Policy(jsonPolicyExample[i].name, jsonPolicyExample[i].room, jsonPolicyExample[i].command, jsonPolicyExample[i].condition, jsonPolicyExample[i].id);
         policiesArray.push(newPolicy);
     }
 

@@ -1,6 +1,4 @@
-import { Policy } from './policy.model.js'
 export class PoliciesExampleArray {
-
     constructor() {
         this.jsonPolicesExample = [{
             'id': '1',
