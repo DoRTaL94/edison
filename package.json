@@ -11,7 +11,7 @@
     },
     "scripts": {
         "lint:eslint": "npm i -g eslint",
-        "lint:prettier": "npm i -g prettier \"**/*.{md,json,yml,html,css}\" --check",
+        "lint:prettier": "prettier \"**/*.{md,json,yml,html,css}\" --check",
         "lint:spellcheck": "npm i -g cspell \"**/*\" \".github/**/*\""
     }
 }
