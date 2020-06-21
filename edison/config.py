@@ -1,5 +1,6 @@
+import secrets
 import inspect
-import sys
+import sys, inspect
 
 
 def get_config_object(env_keyword: str):
@@ -27,6 +28,16 @@ class Config:
     DEBUG = False
     # Turns off the Flask-SQLAlchemy event system
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    # Turn off the Flask-SQLAlchemy event system
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    # Enables response message for unauthenticated requests
+    PROPAGATE_EXCEPTIONS = True
+    # This tells the JWTManager to use jwt.token_in_blacklist_loader callback
+    JWT_BLACKLIST_ENABLED = True
+    # JWTManager uses this secret key for creating tokens
+    JWT_SECRET_KEY = secrets.token_hex(24)
+    # We're going to check if both access_token and refresh_token are black listed
+    JWT_BLACKLIST_TOKEN_CHECKS = ['access', 'refresh']
     SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:edison@127.0.0.1/edison'
 
 # PostgreSQL connection string should be updated once an actual production environment is established.
@@ -37,3 +48,7 @@ class ProductionConfig(Config):
 class DevelopmentConfig(Config):
     ENV_KEYWORD = "development"
     DEBUG = True
+
+class TestConfig(Config):
+    ENV_KEYWORD = "test"
+    TESTING = True

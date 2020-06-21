@@ -13,6 +13,7 @@ test/vagrant-spec/.vagrant/
 # IDE
 _pycache_/
 .idea/*
+.DB_Store
 
 # Python
 *.pyc

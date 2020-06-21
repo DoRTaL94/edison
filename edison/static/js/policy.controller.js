@@ -48,7 +48,6 @@ function createTextElementForUpdate(id, fieldName, field) {
 
   return groupName;
 }
-
 function createUpdateButton(classButton, id) {
   var updateButton = createInitElement('button', classButton, id);
 
