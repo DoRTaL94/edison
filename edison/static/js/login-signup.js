@@ -10,11 +10,10 @@ function signupBtn() {
       password: $('#main_form_password').val(),
     },
     contentType: 'application/json',
-    success: function (data) {
+    success: function () {
       window.location.assign('/');
     },
     error: function (data) {
-      console.log(data);
       $('#error_message').text(data).delay(5000).fadeOut(400);
     },
   });
@@ -30,11 +29,10 @@ function signinBtn() {
       password: $('#main_form_password').val(),
     },
     contentType: 'application/json',
-    success: function (data) {
+    success: function () {
       window.location.assign('/');
     },
     error: function (data) {
-      console.log(data);
       $('#error_message').text(data).delay(5000).fadeOut(400);
     },
   });
